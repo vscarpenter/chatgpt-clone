@@ -20,32 +20,27 @@ A Spring Boot web application that mimics the ChatGPT interface, powered by AWS 
 
 ## Configuration
 
-The application requires the following AWS configuration:
+The application requires the following environment variables:
 
-1. AWS credentials must be configured either through:
-   - Environment variables:
-     ```bash
-     export AWS_ACCESS_KEY_ID=your_access_key
-     export AWS_SECRET_ACCESS_KEY=your_secret_key
-     export AWS_REGION=us-east-1
-     ```
-   - Or AWS credentials file (~/.aws/credentials):
-     ```
-     [default]
-     aws_access_key_id = your_access_key
-     aws_secret_access_key = your_secret_key
-     region = us-east-1
-     ```
+```bash
+# AWS Credentials
+export AWS_ACCESS_KEY_ID=your_access_key
+export AWS_SECRET_ACCESS_KEY=your_secret_key
+export AWS_REGION=us-east-1
 
-2. Application properties can be configured in `src/main/resources/application.yml`:
-   ```yaml
-   aws:
-     bedrock:
-       region: us-east-1
-       model-id: anthropic.claude-v2:1
-       temperature: 0.7
-       max-tokens: 1000
-   ```
+# AWS Bedrock Configuration
+export AWS_BEDROCK_MODEL_ID=anthropic.claude-v2:1
+export AWS_BEDROCK_TEMPERATURE=0.7
+export AWS_BEDROCK_MAX_TOKENS=1000
+```
+
+Alternatively, you can configure AWS credentials through the AWS credentials file (~/.aws/credentials):
+```
+[default]
+aws_access_key_id = your_access_key
+aws_secret_access_key = your_secret_key
+region = us-east-1
+```
 
 ## Building and Running
 
@@ -57,17 +52,19 @@ The application requires the following AWS configuration:
    cd chatgpt-clone
    ```
 
-2. Build the application:
+2. Set up environment variables (as shown in Configuration section)
+
+3. Build the application:
    ```bash
    mvn clean package
    ```
 
-3. Run the application:
+4. Run the application:
    ```bash
    java -jar target/chatgpt-clone-0.0.1-SNAPSHOT.jar
    ```
 
-4. Access the application at: `http://localhost:8080`
+5. Access the application at: `http://localhost:8080`
 
 ### Docker Deployment
 
@@ -82,6 +79,9 @@ The application requires the following AWS configuration:
      -e AWS_ACCESS_KEY_ID=your_access_key \
      -e AWS_SECRET_ACCESS_KEY=your_secret_key \
      -e AWS_REGION=us-east-1 \
+     -e AWS_BEDROCK_MODEL_ID=anthropic.claude-v2:1 \
+     -e AWS_BEDROCK_TEMPERATURE=0.7 \
+     -e AWS_BEDROCK_MAX_TOKENS=1000 \
      chatgpt-clone
    ```
 
@@ -120,6 +120,14 @@ chatgpt-clone/
 - Thymeleaf
 - Lombok
 - Docker
+
+## Security
+
+- No hardcoded credentials in the codebase
+- AWS credentials handled through environment variables or AWS credentials file
+- Input validation and sanitization
+- Security headers for web protection
+- Proper error handling without exposing internal details
 
 ## License
 
