@@ -1,4 +1,4 @@
-package com.example.chatgptclone;
+package com.vinny.chatgptclone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

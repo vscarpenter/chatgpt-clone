@@ -1,4 +1,4 @@
-package com.example.chatgptclone.controller;
+package com.vinny.chatgptclone.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import com.example.chatgptclone.service.BedrockService;
+import com.vinny.chatgptclone.service.BedrockService;
 
 import jakarta.servlet.http.HttpServletResponse;
 
