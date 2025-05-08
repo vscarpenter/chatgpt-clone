@@ -10,4 +10,13 @@ aws:
     region: us-east-1
     model-id: anthropic.claude-3-5-sonnet-20240620-v1:0
     temperature: 0.7
-    max-tokens: 10000 
+    max-tokens: 10000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, shutdown
+  endpoint:
+    shutdown:
+      enabled: true
