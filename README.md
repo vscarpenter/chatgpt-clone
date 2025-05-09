@@ -9,6 +9,7 @@ A Spring Boot web application that mimics the ChatGPT interface, powered by AWS 
 - Real-time chat interface
 - Proper formatting of responses with code blocks and line breaks
 - Docker support for easy deployment
+- Health monitoring and graceful shutdown via Spring Actuator
 
 ## Prerequisites
 
@@ -128,6 +129,15 @@ chatgpt-clone/
 - Input validation and sanitization
 - Security headers for web protection
 - Proper error handling without exposing internal details
+
+## Monitoring
+
+The application includes Spring Actuator endpoints for monitoring and management:
+
+- Health Check: `GET /actuator/health`
+- Graceful Shutdown: `POST /actuator/shutdown` (requires authentication)
+
+These endpoints provide system health information and allow for proper application shutdown.
 
 ## License
 
