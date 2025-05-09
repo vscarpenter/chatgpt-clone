@@ -16,9 +16,12 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.regex.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class BedrockService {
+    private static final Logger logger = LoggerFactory.getLogger(BedrockService.class);
     private final AwsBedrockProperties properties;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final int MAX_PROMPT_LENGTH = 10000;
@@ -30,6 +33,7 @@ public class BedrockService {
     }
 
     public String generateResponse(String prompt) {
+        logger.info("Received prompt request: {}", prompt);
         // Input validation
         if (!StringUtils.hasText(prompt)) {
             throw new IllegalArgumentException("Prompt cannot be empty");
@@ -73,10 +77,16 @@ public class BedrockService {
             JsonNode responseJson = objectMapper.readTree(responseBody);
             String content = responseJson.get("content").get(0).get("text").asText();
             
+            // Log the response
+            logger.info("Received response from Bedrock: {}", content);
+            
             // Sanitize the response before returning
-            return sanitizeOutput(content);
+            String sanitizedResponse = sanitizeOutput(content);
+            logger.debug("Sanitized response: {}", sanitizedResponse);
+            return sanitizedResponse;
         } catch (Exception e) {
-            // Log the error but don't expose internal details
+            // Log the error with details
+            logger.error("Error processing request with prompt: {}", prompt, e);
             throw new RuntimeException("Error processing your request. Please try again later.");
         }
     }
